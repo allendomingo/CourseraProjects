@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar'; 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,7 +22,9 @@ import { MenuComponent } from './menu/menu.component';
     BrowserModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    MatListModule,
+    MatButtonModule,
+    MatCardModule,
+    MatGridListModule,
     MatToolbarModule,
     AppRoutingModule
   ],
