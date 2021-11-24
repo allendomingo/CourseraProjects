@@ -30,9 +30,9 @@
 		<mat-list *ngIf="dish">
 			<h3> COMMENTS </h3>
 			<mat-list-item *ngFor="let comment of dish.comments">
-			<p matLine> {{comment.comment}} </p>
-			<p matLine> {{comment.rating}} Stars </p>
-			<p matLine> -- {{comment.author}} {{comment.date | date}} </p>
+        <p matLine> {{comment.comment}} </p>
+        <p matLine> {{comment.rating}} Stars </p>
+        <p matLine> -- {{comment.author}} {{comment.date | date}} </p>
 			</mat-list-item>
 		</mat-list>
 	</div>
