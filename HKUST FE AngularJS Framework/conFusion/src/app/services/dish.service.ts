@@ -18,16 +18,23 @@ export class DishService {
   }
 
   getDish(id: string): Observable<Dish> {
-		const dish = DISHES.filter((dish) => (dish.id === id))[0];
+		const dish = DISHES.filter(dish => dish.id === id)[0];
 
 		// Simulate server latency with 2 second delay
     return of(dish).pipe(delay(2000));
   }
 
   getFeaturedDish(): Observable<Dish> {
-		const featuredDish = DISHES.filter((dish) => dish.featured)[0];
+		const featuredDish = DISHES.filter(dish => dish.featured)[0];
 
 		// Simulate server latency with 2 second delay
 		return of(featuredDish).pipe(delay(2000));
   }
+
+	getDishIds(): Observable<string[] | any> {
+		const dishIds = DISHES.map(dish => dish.id);
+
+		// Simulate server latency with 2 second delay
+		return of(dishIds).pipe(delay(2000));
+	}
 }
