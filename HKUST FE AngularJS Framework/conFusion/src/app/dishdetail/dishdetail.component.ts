@@ -14,10 +14,11 @@ import { DishService } from '../services/dish.service';
 })
 export class DishdetailComponent implements OnInit {
 
-  dish!: Dish;
-	dishIds!: string[];
-	prev!: string;
-	next!: string;
+  dish: Dish | undefined;
+	dishIds: string[] | undefined;
+	prev: string | undefined;
+	next: string | undefined;
+	errMess: string | undefined;
 	commentForm!: FormGroup;
 	@ViewChild('cform') commentFormDirective!: NgForm;
 
@@ -51,17 +52,22 @@ export class DishdetailComponent implements OnInit {
 			.subscribe(dishIds => this.dishIds = dishIds);
     this.route.params
 			.pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
-			.subscribe(dish => {
-				this.dish = dish;
-				this.setPrevNext(dish.id);
-			});
+			.subscribe(
+				dish => {
+					this.dish = dish;
+					this.setPrevNext(dish.id);
+				},
+				errMess => this.errMess = <any>errMess,
+			);
   }
 
 	setPrevNext(dishId: string): void {
-		const index = this.dishIds.indexOf(dishId);
-		const length = this.dishIds.length;
-		this.prev = this.dishIds[(length + index - 1) % length];
-		this.next = this.dishIds[(length + index + 1) % length];
+		if (this.dishIds) {
+			const index = this.dishIds.indexOf(dishId);
+			const length = this.dishIds.length;
+			this.prev = this.dishIds[(length + index - 1) % length];
+			this.next = this.dishIds[(length + index + 1) % length];
+		}
 	}
  
   goBack(): void {
@@ -108,10 +114,12 @@ export class DishdetailComponent implements OnInit {
 	}
 
 	onSubmit(): void {
-		this.dish.comments.push({
-			...this.commentForm.value,
-			date: new Date().toISOString(),
-		});
+		if (this.dish) {
+			this.dish.comments.push({
+				...this.commentForm.value,
+				date: new Date().toISOString(),
+			});
+		}
 		this.commentFormDirective.resetForm();
 		this.commentForm.reset({
 			author: '',
