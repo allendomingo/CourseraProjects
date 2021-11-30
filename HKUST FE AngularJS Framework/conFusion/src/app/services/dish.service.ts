@@ -1,40 +1,33 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { Dish } from '../shared/dish';
-import { DISHES } from '../shared/dishes';
+import { baseURL } from '../shared/baseurl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DishService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getDishes(): Observable<Dish[]> {
-		// Simulate server latency with 2 second delay
-    return of(DISHES).pipe(delay(2000));
+    return this.http.get<Dish[]>(baseURL + 'dishes');
   }
 
   getDish(id: string): Observable<Dish> {
-		const dish = DISHES.filter(dish => dish.id === id)[0];
-
-		// Simulate server latency with 2 second delay
-    return of(dish).pipe(delay(2000));
+		return this.http.get<Dish>(baseURL + 'dishes/' + id);
   }
 
   getFeaturedDish(): Observable<Dish> {
-		const featuredDish = DISHES.filter(dish => dish.featured)[0];
-
-		// Simulate server latency with 2 second delay
-		return of(featuredDish).pipe(delay(2000));
+		return this.http.get<Dish[]>(baseURL + 'dishes?featured=true')
+			.pipe(map(dishes => dishes[0]));
   }
 
 	getDishIds(): Observable<string[] | any> {
-		const dishIds = DISHES.map(dish => dish.id);
-
-		// Simulate server latency with 2 second delay
-		return of(dishIds).pipe(delay(2000));
+		return this.getDishes()
+			.pipe(map(dishes => dishes.map(dish => dish.id)));
 	}
 }
