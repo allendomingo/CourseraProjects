@@ -41,7 +41,7 @@
         <p matLine>{{ comment.rating }} Stars</p>
         <p matLine>-- {{ comment.author }} {{ comment.date | date }}</p>
 			</mat-list-item>
-			<mat-list-item *ngIf="commentForm.value && commentForm.valid">
+			<mat-list-item *ngIf="commentForm.valid">
 				<p matLine>{{ commentForm.value.comment }}</p>
 				<p matLine>{{ commentForm.value.rating }} Stars</p>
 				<p matLine>-- {{ commentForm.value.author }}</p>
@@ -69,7 +69,6 @@
 					min="1"
 					max="5"
 					step="1"
-					value="5"
 					tickInterval="1"
 					thumbLabel
 				>
@@ -94,6 +93,7 @@
 				mat-button
 				type="submit"
 				class="background-primary text-floral-white"
+				[style]="commentForm.invalid ? 'background-color:#9575CD !important' : ''"
 				[disabled]="commentForm.invalid"
 			>
 				Submit
