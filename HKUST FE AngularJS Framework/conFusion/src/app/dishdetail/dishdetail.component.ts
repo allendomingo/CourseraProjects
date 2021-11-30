@@ -2,28 +2,24 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { trigger, state, style, animate, transition } from '@angular/animations';
 import { switchMap } from 'rxjs/operators';
 
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
+import { expand, flyInOut, visibility } from '../animations/app.animation';
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
   styleUrls: ['./dishdetail.component.scss'],
+	host: {
+		'[@flyInOut]': 'true',
+		'style': 'display: block;'
+	},
 	animations: [
-		trigger('visibility', [
-			state('shown', style({
-				transform: 'scale(1.0)',
-				opacity: 1
-			})),
-			state('hidden', style({
-				transform: 'scale(0.5)',
-				opacity: 0
-			})),
-			transition('* => *', animate('0.5s ease-in-out'))
-		])
+		expand(),
+		flyInOut(),
+		visibility()
 	]
 })
 export class DishdetailComponent implements OnInit {

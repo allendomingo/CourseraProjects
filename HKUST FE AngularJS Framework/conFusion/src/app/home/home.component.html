@@ -6,7 +6,7 @@
 	fxLayoutGap="10px"
 >
 
-<mat-card *ngIf="dish" fxFlex>
+<mat-card *ngIf="dish" fxFlex [@expand]>
 	<mat-card-header>
 		<div mat-card-avatar></div>
 		<mat-card-title>
@@ -27,7 +27,7 @@
 	<h4>{{ dishErrMess }}</h4>
 </div>
 
-<mat-card *ngIf="promotion" fxFlex>
+<mat-card *ngIf="promotion" fxFlex [@expand]>
 	<mat-card-header>
 		<div mat-card-avatar></div>
 		<mat-card-title>
@@ -44,7 +44,7 @@
 	<h4>Loading . . . Please Wait</h4>
 </div>
 
-<mat-card *ngIf="leader" fxFlex>
+<mat-card *ngIf="leader" fxFlex [@expand]>
 	<mat-card-header>
 		<mat-card-title>
 			<h3>{{ leader.name | uppercase }} {{ leader.abbr | uppercase }}</h3>
