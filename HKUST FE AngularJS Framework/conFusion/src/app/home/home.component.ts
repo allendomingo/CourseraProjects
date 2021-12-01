@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
   promotion: Promotion | undefined;
 	promotionErrMess: string | undefined;
   leader: Leader | undefined;
+	leaderErrMess: string | undefined;
 
   constructor(
     private dishService: DishService,
@@ -48,7 +49,10 @@ export class HomeComponent implements OnInit {
 				errMess => this.promotionErrMess = <any>errMess,
 			);
     this.leaderService.getFeaturedLeader()
-			.subscribe((featuredLeader) => this.leader = featuredLeader);
+			.subscribe(
+				(featuredLeader) => this.leader = featuredLeader,
+				errMess => this.leaderErrMess = <any>errMess,
+			);
   }
 
 }
