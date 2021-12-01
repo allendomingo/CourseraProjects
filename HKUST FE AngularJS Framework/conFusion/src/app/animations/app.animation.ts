@@ -44,7 +44,7 @@ export function expand() {
 		})),
 		transition(':enter', [
 			style({
-				transform: 'translateX(-50%)',
+				transform: 'translateY(-50%)',
 				opacity: 0,
 			}),
 			animate('200ms ease-in', style({
