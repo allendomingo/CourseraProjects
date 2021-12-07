@@ -14,7 +14,7 @@ dishRouter.route('/')
 		res.end('Will send all the dishes to you!');
 	})
 	.post((req, res, _) => {
-		res.end('Will send all the dish: ' + req.body.name
+		res.end('Will add the dish: ' + req.body.name
 			+ ' with details: ' + req.body.description);
 	})
 	.put((_, res, __) => {
@@ -22,26 +22,26 @@ dishRouter.route('/')
 		res.end('PUT operation not supported on /dishes');
 	})
 	.delete((_, res, __) => {
-		res.end('Deleting all the dishes!');
+		res.end('Deleting all dishes');
+	});
+
+dishRouter.route('/:dishId')
+	.get((req, res, _) => {
+		res.end('Will send details of the dish: '
+			+ req.params.dishId + ' to you!');
+	})
+	.post((req, res, _) => {
+		res.statusCode = 403;
+		res.end('POST operation not supported on /dishes/'
+			+ req.params.dishId);
+	})
+	.put((req, res, _) => {
+		res.write('Updating the dish: ' + req.params.dishId + '\n');
+		res.end('Will update the dish: ' + req.body.name
+			+ ' with details: ' + req.body.description);
+	})
+	.delete((req, res, _) => {
+		res.end('Deleting dish: ' + req.params.dishId);
 	});
 
 module.exports = dishRouter;
-
-
-// app.get('/dishes/:dishId', (req, res, _) => {
-// 	res.end('Will send details of the dish: '
-// 		+ req.params.dishId + ' to you!');
-// });
-// app.post('/dishes/:dishId', (req, res, _) => {
-// 	res.statusCode = 403;
-// 	res.end('POST operation not supported on /dishes/'
-// 		+ req.params.dishId);
-// });
-// app.put('/dishes/:dishId', (req, res, _) => {
-// 	res.write('Updating the dish: ' + req.params.dishId + '\n');
-// 	res.end('Will update the dish: ' + req.body.name
-// 		+ ' with details: ' + req.body.description);
-// });
-// app.delete('/dishes/:dishId', (req, res, _) => {
-// 	res.end('Deleting dish: ' + req.params.dishId);
-// });
