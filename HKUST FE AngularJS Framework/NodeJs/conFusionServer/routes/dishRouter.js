@@ -55,10 +55,11 @@ dishRouter.route('/:dishId')
 			+ req.params.dishId);
 	})
 	.put((req, res, next) => {
-		Dishes.findByIdAndUpdate(req.params.dishId,  {
-			$set: req.body,
-		}, { new: true })
-			.then((dish) => {
+		Dishes.findByIdAndUpdate(
+			req.params.dishId,
+			{ $set: req.body },
+			{ new: true },
+		).then((dish) => {
 				res.statusCode = 200;
 				res.setHeader('Content-Type', 'applicaton/json');
 				res.json(dish);
