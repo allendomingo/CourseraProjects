@@ -1,2 +1,11 @@
+# Dependencies
 node_modules
+
+# Server Files
 sessions
+public/images
+
+# Verification Files
+cert.csr
+certificate.pem
+private.key

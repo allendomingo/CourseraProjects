@@ -8,8 +8,10 @@ const config = require('./config');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const dishRouter = require('./routes/dishRouter');
+const favoriteRouter = require('./routes/favoriteRouter');
 const promoRouter = require('./routes/promoRouter');
 const leaderRouter = require('./routes/leaderRouter');
+const uploadRouter = require('./routes/uploadRouter');
 
 const mongoose = require('mongoose');
 
@@ -21,6 +23,16 @@ connect.then(() => {
 }, (err) => { console.log(err) });
 
 const app = express();
+
+app.all('*', (req, res, next) => {
+	if (req.secure) {
+		return next();
+	}
+	res.redirect(
+		307,
+		'https://' + req.hostname + ':' + app.get('secPort') + req.url,
+	);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,8 +50,10 @@ app.use('/users', usersRouter);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/dishes', dishRouter);
+app.use('/favorites', favoriteRouter);
 app.use('/promotions', promoRouter);
 app.use('/leaders', leaderRouter);
+app.use('/imageUpload', uploadRouter);
 
 // catch 404 and forward to error handler
 app.use(function(_, __, next) {

@@ -1,13 +1,14 @@
-var express = require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const User = require('../models/user');
 const authenticate = require('../authenticate');
+const cors = require('./cors');
 
-var router = express.Router();
+const router = express.Router();
 router.use(bodyParser.json());
 
-router.get('/', authenticate.verifyUser, authenticate.verifyAdmin, (_, res, next) => {
+router.get('/', cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (_, res, next) => {
   User.find({})
 		.then((users) => {
 			res.statusCode = 200;
@@ -17,7 +18,7 @@ router.get('/', authenticate.verifyUser, authenticate.verifyAdmin, (_, res, next
 		.catch((err) => next(err));
 });
 
-router.post('/signup', (req, res, _) => {
+router.post('/signup', cors.corsWithOptions, (req, res, _) => {
 	User.register(
 		new User({ username: req.body.username }),
 		req.body.password,
@@ -53,7 +54,7 @@ router.post('/signup', (req, res, _) => {
 		});
 });
 
-router.post('/login', passport.authenticate('local'), (req, res) => {
+router.post('/login', cors.corsWithOptions, passport.authenticate('local'), (req, res) => {
 	const token = authenticate.getToken({ _id: req.user._id });
 	res.statusCode = 200;
 	res.setHeader('Content-Type', 'applicaton/json');
@@ -73,6 +74,19 @@ router.get('/logout', (req, res, next) => {
 		const err = new Error('You are not logged in!');
 		err.status = 403;
 		next(err);
+	}
+});
+
+router.get('/facebook/token', passport.authenticate('facebook-token'), (req, res) => {
+	if (req.user) {
+		const token = authenticate.getToken({ _id: req.user._id });
+		res.statusCode = 200;
+		res.setHeader('Content-Type', 'applicaton/json');
+		res.json({
+			success: true,
+			token: token,
+			status: 'You are successfully logged in!',
+		});
 	}
 });
 
