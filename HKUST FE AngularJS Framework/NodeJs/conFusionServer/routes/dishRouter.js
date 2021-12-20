@@ -9,7 +9,7 @@ const dishRouter = express.Router();
 dishRouter.use(bodyParser.json());
 
 dishRouter.route('/')
-	.options(cors.corsWithOptions, (req, res) => { res.sendStatus = 200 })
+	.options(cors.corsWithOptions, (_, res) => { res.sendStatus = 200 })
 	.get(cors.cors, (_, res, next) => {
 		Dishes.find({})
 			.populate('comments.author')
@@ -59,7 +59,7 @@ dishRouter.route('/')
 	);
 
 dishRouter.route('/:dishId')
-	.options(cors.corsWithOptions, (req, res) => { res.sendStatus = 200 })
+	.options(cors.corsWithOptions, (_, res) => { res.sendStatus = 200 })
 	.get(cors.cors, (req, res, next) => {
 		Dishes.findById(req.params.dishId)
 			.populate('comments.author')
@@ -90,11 +90,11 @@ dishRouter.route('/:dishId')
 				{ $set: req.body },
 				{ new: true },
 			).then((dish) => {
-					res.statusCode = 200;
-					res.setHeader('Content-Type', 'applicaton/json');
-					res.json(dish);
-				}, (err) => next(err))
-				.catch((err) => next(err));
+				res.statusCode = 200;
+				res.setHeader('Content-Type', 'applicaton/json');
+				res.json(dish);
+			}, (err) => next(err))
+			.catch((err) => next(err));
 		},
 	)
 	.delete(
@@ -113,7 +113,7 @@ dishRouter.route('/:dishId')
 	);
 
 dishRouter.route('/:dishId/comments')
-	.options(cors.corsWithOptions, (req, res) => { res.sendStatus = 200 })
+	.options(cors.corsWithOptions, (_, res) => { res.sendStatus = 200 })
 	.get(cors.cors, (req, res, next) => {
 		Dishes.findById(req.params.dishId)
 			.populate('comments.author')
@@ -197,7 +197,7 @@ dishRouter.route('/:dishId/comments')
 	);
 
 dishRouter.route('/:dishId/comments/:commentId')
-	.options(cors.corsWithOptions, (req, res) => { res.sendStatus = 200 })
+	.options(cors.corsWithOptions, (_, res) => { res.sendStatus = 200 })
 	.get(cors.cors, (req, res, next) => {
 		Dishes.findById(req.params.dishId)
 			.populate('comments.author')
