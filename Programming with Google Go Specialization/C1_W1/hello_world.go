@@ -1,4 +1,4 @@
-package main
+package C1_W1
 
 import "fmt"
 
