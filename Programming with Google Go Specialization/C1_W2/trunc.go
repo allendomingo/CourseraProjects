@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main() {
+func trunc() {
 	var float_input float64
 	var int_output int
 	fmt.Scan(&float_input)
